@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <title>PhotoViewer: About</title>
+    <meta http-equiv="content-type" content="text/html;charset=iso-8859-1" />
+    <meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <meta name="description" content="PhotoViewer - Assignment 1 for comp 120 Spring MMX" />
+    <meta name="keywords" content="Will Mernagh, Tufts University, Computer Science, Web Engineering" />
+    <meta name="robots" content="index,follow" />
+    
+  </head>
+  
+  <body>
+    <h3>Requirements</h3>
+    <ul>
+      <li>API from <a href="http://www.flickr.com/services/api">Flickr</a></li>
+      <li>Widgets used include - HorizontalPanel, TextBox, ListBox, and Button.</li>
+      <li>Functionality: 
+        <br/>
+        <br/>1. Entering a username into the TextBox and hitting the submit button requests publicly viewable photo-set information for that user.
+        It sets the output div to loading... while waiting for AJAX to return.
+        <br/>The returned photo-sets populate the ListBox with the photo-set names. It also displays the set count in the output div.
+        <br/> 
+        <br/>2. Selecting a photo-set in the ListBox will send a request to the server for the photos in the selected photo-set.
+        It sets the output div to loading... while waiting for AJAX.
+        <br/>The returned photos populate the output div.
+        <br/>
+        <br/>3. I added history management to the page also. This allows the user to use the back &amp; forward buttons with AJAX requests. The
+        data is not cached but the events fired are stored as parameters. This also allows for the sending of links via email/twitter/etc.
+        <br/>
+        <br/>4. I also added some exception handling. I did this in two ways. One is server side by using the PhotoViewerException class, 
+        the other is client side by reading the JSON stat in the response.
+        <br/><br/>
+      </li>
+      <li>
+        The server processes XML in order to find the userid of the username searched for. The server then uses the Flickr JSONP API to 
+        populate the FlickrUser attributes as strings. The client will evaluate the JSONP callbacks.
+      </li>
+      <li>I modified the CSS to keep it centered.</li>
+    </ul>
+  </body>
+</html>

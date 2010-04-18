@@ -1,0 +1,59 @@
+body {
+	background: none repeat scroll 0 0 #333333;
+	color: #333333;
+	font: 76%/1.5em Veranda, "Trebuchet MS",Arial,Sans-serif;
+	margin: 0 20px;
+	text-align: center;
+}
+
+#container {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 0 solid #CCCCCC;
+	margin: 10px auto;
+	position: relative;
+	text-align: left;
+	width: 640px;
+}
+
+#content {
+	margin: 10px 10px 10px 30px;
+	height: 1%;
+}
+
+#input {
+	float: left;
+	margin-right: 20px;
+	width: 100%;
+}
+
+h1 {
+	font-size: 2em;
+	font-weight: bold;
+	color: #777777;
+	margin: 40px 0px 70px;
+}
+
+.person-input-panel {
+	background-color: #AACCFF;
+	border: 2px solid #3366CC;
+	font-weight: bold;
+	width: 100%;
+}
+
+/* Apply padding to every element within the input panel */
+.person-input-panel * {
+	padding: 3px;
+}
+
+/* Override default style */
+.gwt-Button {
+	background-color: #3366CC;
+	color: blue;
+	font-weight: bold;
+	border: 1px solid #AACCFF;
+}
+
+.gwt-Button:hover {
+	background-color: #FF0084;
+	color: green;
+}
