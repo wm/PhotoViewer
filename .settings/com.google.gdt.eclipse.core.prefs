@@ -1,3 +1,5 @@
-#Fri Feb 05 22:24:39 EST 2010
+#Sun Apr 18 23:04:34 EDT 2010
 eclipse.preferences.version=1
 jarsExcludedFromWebInfLib=
+warSrcDir=war
+warSrcDirIsOutput=true

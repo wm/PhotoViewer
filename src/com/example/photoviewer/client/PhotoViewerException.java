@@ -2,7 +2,7 @@ package com.example.photoviewer.client;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class PhotoViewerException extends Throwable
+public class PhotoViewerException extends java.lang.Exception
 implements IsSerializable
 {
 	private static final long serialVersionUID = 4740975800356479306L;
