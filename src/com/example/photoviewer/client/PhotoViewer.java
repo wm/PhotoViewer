@@ -247,9 +247,10 @@ public class PhotoViewer implements EntryPoint,ValueChangeHandler<String>
 						}
 						setlist.setEnabled(true);
 						photoHTML.setHTML("Loaded "+(setlist.getItemCount() - 1)+" set(s).");
-
 					}
 				});
+
+				photoHTML.setHTML(photoHTML.getHTML() + " This user has been quired " + flickrUser.getCount() + " times.");
 			}
 		});
 		
