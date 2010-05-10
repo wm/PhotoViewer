@@ -41,6 +41,7 @@ public class PhotoServiceImpl extends RemoteServiceServlet implements PhotoServi
 
 	public FlickrUser getFlickrUser(String username, String setId) throws PhotoViewerException  {
 		FlickrUser flickrUser = new FlickrUser();
+		FlickrUserInfo fui;
 		try{
 			if( setId != null && !setId.isEmpty() && username != null && !username.isEmpty()){
 				flickrUser.setUsername(username);
@@ -66,6 +67,9 @@ public class PhotoServiceImpl extends RemoteServiceServlet implements PhotoServi
 		}catch(ParserConfigurationException e){
 			flickrUser.setMessage("ParserConfigurationException: "+ e.getMessage());
 		}
+		fui = new FlickrUserInfo(flickrUser);
+		fui.save();
+		flickrUser.setCount(fui.getCount());
 		return flickrUser;
 	}
 

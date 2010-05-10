@@ -11,13 +11,15 @@ public class FlickrUser implements IsSerializable {
 	 */
   private static final long serialVersionUID = 1L;
   private static final String UNKNOWN = "UNKNOWN";
-  private String username;
-  private String userId;
-  private String photosets;
-  private String selectedSetPhotos;
-  private String message;
+  private String username = "";
+  private String userId = "";
+  private String photosets = "";
+  private String selectedSetPhotos = "";
+  private String message = "";
+  private int count = 0;
   
-  public FlickrUser(){
+
+public FlickrUser(){
 	  username = UNKNOWN;
   }
 
@@ -77,6 +79,14 @@ public class FlickrUser implements IsSerializable {
   public String getUserId(){
 	  return this.userId;
 	  //return "69919827@N00";
+  }
+  
+  public int getCount() {
+		return count;
+  }
+
+  public void setCount(int count) {
+		this.count = count;
   }
  
 }
