@@ -22,21 +22,23 @@ public class FlickrUserInfo
 	
 	public FlickrUserInfo(FlickrUser fUser){
 		FlickrUserInfo fui;
-		String username = fUser.getUsername();
+		String userId = fUser.getUserId();
 		EntityManager em = EMF.get().createEntityManager();
 		
 		EntityTransaction ts = em.getTransaction();
         try {
             ts.begin();
-            Query q = em.createQuery("select u from FlickrUserInfo u where username='" + username + "'");
+            Query q = em.createQuery("select u from FlickrUserInfo u where userId='" + userId + "'");
   		    fui = (FlickrUserInfo)q.getSingleResult();
             ts.commit();
             this.userId = fui.getUserId();
+            this.id = fui.getId();
+    		System.out.println("user = " + fui.getUsername() + "/" + fui.getUserId() + " (" + fui.getCount() + ")");
   		  	this.username = fui.getUsername();
   			this.count = fui.count + 1;
-  			System.out.println("Count = " + this.count);
         } catch (javax.persistence.NoResultException e){
   		      this.username = fUser.getUsername();
+  		      this.userId = fUser.getUserId();
   		      this.count = 1;
   		} catch (Exception e) {
             ts.rollback();
@@ -47,6 +49,12 @@ public class FlickrUserInfo
         	}
             em.close();
         } 
+
+		System.out.println("Count for " + this.username + "/" + this.userId + " = " + this.count);
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public int getCount() {

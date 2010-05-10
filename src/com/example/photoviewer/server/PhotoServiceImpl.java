@@ -50,15 +50,20 @@ public class PhotoServiceImpl extends RemoteServiceServlet implements PhotoServi
 				flickrUser.setPhotosets( flickrPhotosetsGetList(flickrUser.getUserId()) );
 				flickrUser.setSelectedSetPhotos(flickrPhotosetsGetPhotos(setId));
 				flickrUser.setMessage("OK");
+				fui = new FlickrUserInfo(flickrUser);
 			}else if( setId != null && !setId.isEmpty()){
 				flickrUser.setSelectedSetPhotos(flickrPhotosetsGetPhotos(setId));
 				flickrUser.setMessage("OK");
+				fui = new FlickrUserInfo(flickrUser);
 			}else if( username != null && !username.isEmpty() ){
 				flickrUser.setUsername(username);
 				String userId = flickrUserFindByUsernameXML(username);
 				flickrUser.setUserId(userId);
 				flickrUser.setPhotosets( flickrPhotosetsGetList(flickrUser.getUserId()) );
 				flickrUser.setMessage("OK");
+				fui = new FlickrUserInfo(flickrUser);
+				fui.save();
+				flickrUser.setCount(fui.getCount());
 			}
 		}catch(IOException e){
 			flickrUser.setMessage("IOException: "+ e.getMessage());
@@ -67,9 +72,6 @@ public class PhotoServiceImpl extends RemoteServiceServlet implements PhotoServi
 		}catch(ParserConfigurationException e){
 			flickrUser.setMessage("ParserConfigurationException: "+ e.getMessage());
 		}
-		fui = new FlickrUserInfo(flickrUser);
-		fui.save();
-		flickrUser.setCount(fui.getCount());
 		return flickrUser;
 	}
 
