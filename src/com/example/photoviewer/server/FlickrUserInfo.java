@@ -33,7 +33,7 @@ public class FlickrUserInfo
             ts.commit();
             this.userId = fui.getUserId();
             this.id = fui.getId();
-    		System.out.println("user = " + fui.getUsername() + "/" + fui.getUserId() + " (" + fui.getCount() + ")");
+    		//System.out.println("user = " + fui.getUsername() + "/" + fui.getUserId() + " (" + fui.getCount() + ")");
   		  	this.username = fui.getUsername();
   			this.count = fui.count + 1;
         } catch (javax.persistence.NoResultException e){
@@ -50,7 +50,7 @@ public class FlickrUserInfo
             em.close();
         } 
 
-		System.out.println("Count for " + this.username + "/" + this.userId + " = " + this.count);
+		//System.out.println("Count for " + this.username + "/" + this.userId + " = " + this.count);
 	}
 
 	public Long getId() {
