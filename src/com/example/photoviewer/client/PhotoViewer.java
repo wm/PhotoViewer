@@ -15,6 +15,8 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.*;
 import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.DOM;
+
 
 public class PhotoViewer implements EntryPoint,ValueChangeHandler<String>
 {
@@ -158,15 +160,19 @@ public class PhotoViewer implements EntryPoint,ValueChangeHandler<String>
 
 							String html = "";
 							for(int i=0; i < photoArray.size(); i++){
+						        String auth = DOM.getElementById("auth").getAttribute("value");
 								JSONObject photo = photoArray.get(i).isObject();
 								int farm = (int)photo.get("farm").isNumber().doubleValue();
 								String server = photo.get("server").isString().stringValue();
 								String id = photo.get("id").isString().stringValue();
 								String secret = photo.get("secret").isString().stringValue();
 								String url = "http://farm"+farm+".static.flickr.com/"+server+"/"+id+"_"+secret+"_"+"s.jpg";
-								
-								html = html + "<img src='"+url+"'/>";
-								
+								String bigUrl = "http://farm"+farm+".static.flickr.com/"+server+"/"+id+"_"+secret+".jpg";
+						        String regImage = "<img src='"+url+"'/>";
+						        String authImage = "<a href='"+bigUrl+"'>"+regImage+"</a>";	
+
+						        String image = (auth == "true") ? authImage : regImage;
+								html = html + image;
 							}
 							photoHTML.setHTML(html);	
 						}
