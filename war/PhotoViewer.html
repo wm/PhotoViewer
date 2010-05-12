@@ -1,0 +1,23 @@
+<h3>PhotoViewer - Version 2 for assignment 4</h3>
+This application will list the photo sets a Flickr User has made publicly available. Selection of a set will then display
+photos of that set as thumbnails. If the user is logged in the thumbnails will be links to the larger version of the photo.
+
+<pre>
+- Requirements for assignment
+  1. Stores a count of the requests for a particular flickr username in the database.
+  2. MemCaches the data downloaded from Flickr for quicker dilevery to the user
+  3. Provides links to the larger photos if the user is authenticated.
+  
+- How to test it
+  1. Count increases for each submit click for a particular user
+  2. Cache can be seen by annotated OK in the JSON response (the first OK will not be annotated)
+  3. Links should appear in around the images once you log in.
+  
+- By using firebug you will be able to see the Ajax queries and what gets downloaded. Try entering the user name 'mernagh' 
+  and you will see that this user has been queried prior. Viewing the JSON returned from the server you will see the
+  term OK in a number of places. On subsequent requests it will actually say OK - CACHED. Note that I do not memcache the
+  Data that I store in the DB just the data I retrieve from Flickr. This way the query count should keep increasing but
+  the data returned will be the cached data.
+</pre>
+<br/>
+The application can be seen <a href="PhotoViewer.jsp">here</a>. And the code is available <a href="https://github.com/wmernagh/PhotoViewer/tree/vA.2">here</a>
