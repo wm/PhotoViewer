@@ -20,6 +20,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.InputSource;
 import java.io.StringReader;
 
+import java.util.Collections;
+import com.google.appengine.api.memcache.*;
+
 
 /**
  * The server side implementation of the RPC service.
@@ -27,6 +30,7 @@ import java.io.StringReader;
 @SuppressWarnings("serial")
 public class PhotoServiceImpl extends RemoteServiceServlet implements PhotoService
 {
+	private static final MemcacheService memcache = MemcacheServiceFactory.getMemcacheService();
 	private static final String API_KEY = "7b6ba415a261a9822be49b8b7e4b6c79";
 	private static final String PhotoSet_URL = "http://api.flickr.com/services/rest/?method=flickr.photosets.getList&jsoncallback=flickrPhotosetsGetList";
 	private static final String SetPhotoList_URL = "http://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&jsoncallback=flickrPhotosetsGetPhotos";
@@ -40,27 +44,52 @@ public class PhotoServiceImpl extends RemoteServiceServlet implements PhotoServi
 	}
 
 	public FlickrUser getFlickrUser(String username, String setId) throws PhotoViewerException  {
+		memcache.setNamespace("FLICKR_USER"); //good practice
 		FlickrUser flickrUser = new FlickrUser();
 		FlickrUserInfo fui;
 		try{
 			if( setId != null && !setId.isEmpty() && username != null && !username.isEmpty()){
-				flickrUser.setUsername(username);
-				String userId = flickrUserFindByUsernameXML(username);
-				flickrUser.setUserId(userId);
-				flickrUser.setPhotosets( flickrPhotosetsGetList(flickrUser.getUserId()) );
-				flickrUser.setSelectedSetPhotos(flickrPhotosetsGetPhotos(setId));
-				flickrUser.setMessage("OK");
+				//check cache first
+				if (memcache.contains("u_" + username + "__s_" + setId)){
+					flickrUser = (FlickrUser)memcache.get("u_" + username + "__s_" + setId);
+					//for demo purposes
+					flickrUser.setMessage(flickrUser.getMessage() + " - CACHED");
+				}else{
+					flickrUser.setUsername(username);
+					String userId = flickrUserFindByUsernameXML(username);
+					flickrUser.setUserId(userId);
+					flickrUser.setPhotosets( flickrPhotosetsGetList(flickrUser.getUserId()) );
+					flickrUser.setSelectedSetPhotos(flickrPhotosetsGetPhotos(setId));
+					flickrUser.setMessage("OK");
+					memcache.put("u_" + username + "__s_" + setId, flickrUser);
+				}
 				fui = new FlickrUserInfo(flickrUser);
 			}else if( setId != null && !setId.isEmpty()){
-				flickrUser.setSelectedSetPhotos(flickrPhotosetsGetPhotos(setId));
-				flickrUser.setMessage("OK");
+				//check cache first
+				if (memcache.contains("s_" + setId)){
+					flickrUser = (FlickrUser)memcache.get("s_" + setId);
+					//for demo purposes
+					flickrUser.setMessage(flickrUser.getMessage() + " - CACHED");
+				}else{
+					flickrUser.setSelectedSetPhotos(flickrPhotosetsGetPhotos(setId));
+					flickrUser.setMessage("OK");
+					memcache.put("s_" + setId, flickrUser);
+				}
 				fui = new FlickrUserInfo(flickrUser);
 			}else if( username != null && !username.isEmpty() ){
-				flickrUser.setUsername(username);
-				String userId = flickrUserFindByUsernameXML(username);
-				flickrUser.setUserId(userId);
-				flickrUser.setPhotosets( flickrPhotosetsGetList(flickrUser.getUserId()) );
-				flickrUser.setMessage("OK");
+				//check cache first
+				if (memcache.contains("u_" + username)){
+					flickrUser = (FlickrUser)memcache.get("u_" + username);
+					//for demo purposes
+					flickrUser.setMessage(flickrUser.getMessage() + " - CACHED");
+				}else{
+					flickrUser.setUsername(username);
+					String userId = flickrUserFindByUsernameXML(username);
+					flickrUser.setUserId(userId);
+					flickrUser.setPhotosets( flickrPhotosetsGetList(flickrUser.getUserId()) );
+					flickrUser.setMessage("OK");
+					memcache.put("u_" + username, flickrUser);
+				}
 				fui = new FlickrUserInfo(flickrUser);
 				fui.save();
 				flickrUser.setCount(fui.getCount());

@@ -1,11 +1,10 @@
 package com.example.photoviewer.client;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.gwt.json.client.JSONParser;
-
 import com.example.photoviewer.client.JSONRequestHandler;
+import java.io.*;
 
-public class FlickrUser implements IsSerializable {
+public class FlickrUser implements Serializable {
   /**
 	 * 
 	 */
